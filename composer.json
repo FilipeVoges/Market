@@ -15,12 +15,13 @@
             "Database\\": "database/"
         },
         "files": [
-            "config/app.conf.php",
+            "config/application.conf.php",
             "app/Helpers/helpers.php"
         ]
 
     },
     "scripts": {
-        "migrate": "Database\\Migrations\\Migration::up"
+        "migrate": "Database\\Migrations\\Migration::up",
+        "revertMigrate" : "Database\\Migrations\\Migration::down"
     }
 }

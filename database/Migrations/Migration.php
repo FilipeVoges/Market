@@ -2,10 +2,12 @@
 
 namespace Database\Migrations;
 
+use App\Modules\Configuration\Configuration;
 use App\Modules\Connection\Database;
 
 class Migration
 {
+
     /**
      * Run the Migrations.
      *
@@ -13,6 +15,8 @@ class Migration
      * @throws Exception
      */
     public static function up() {
+        Configuration::load();
+
         $db = Database::getInstance();
 
         self::down();
@@ -51,6 +55,8 @@ class Migration
      * @throws Exception
      */
     public static function down() {
+        Configuration::load();
+
         $db = Database::getInstance();
 
         $sql = "DROP TABLE IF EXISTS products";
