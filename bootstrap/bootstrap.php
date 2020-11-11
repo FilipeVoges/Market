@@ -2,6 +2,7 @@
 
 require_once getcwd() . '/../vendor/autoload.php';
 
+use App\Controllers\HomeController;
 use App\Modules\Configuration\Router;
 
 $method = $_SERVER['REQUEST_METHOD'];
@@ -10,15 +11,14 @@ $path = $_SERVER['PATH_INFO'] ?? '/';
 $router = new Router($method, $path);
 
 $router->add('GET', '/', function ($params) {
-    return '';
+    return HomeController::home();
 });
-
 
 $result = $router->handler();
 
 if (!$result) {
     http_response_code(404);
-    //TODO: Criar 404 page
+    echo "Erro 404";
     die();
 }
 
