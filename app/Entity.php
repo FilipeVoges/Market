@@ -10,7 +10,7 @@ use App\Modules\Connection\Database;
  * @since 2018-10-15
  * @author Filipe Voges <filipe@emsventura.com.br>
  */
-abstract class Entity extends stdClass{
+abstract class Entity extends \stdClass{
 
     /**
      * @var int $aI;
@@ -117,7 +117,7 @@ abstract class Entity extends stdClass{
      *
      * @param mixed $search
      * string $key
-     * @return Entidade
+     * @return Entity
      * @throws Exception
      */
     public static function find($search, string $key = 'id') {
@@ -143,8 +143,8 @@ abstract class Entity extends stdClass{
      * Construct Class
      */
     public function __construct(){
-        Entidade::$aI = intval(Entidade::$aI) + 1;
-        $this->set('idClass', Entidade::$aI);
+        Entity::$aI = intval(Entity::$aI) + 1;
+        $this->set('idClass', Entity::$aI);
 
         if($this->get('hasConn')) {
             $this->db = Database::getInstance();
