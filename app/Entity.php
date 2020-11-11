@@ -34,7 +34,7 @@ abstract class Entity extends stdClass{
      * @var bool
      * @access protected
      */
-    protected $hasConn = false;
+    protected $hasConn = true;
 
     /**
      * @var \App\Modules\Connection\Database
@@ -46,7 +46,7 @@ abstract class Entity extends stdClass{
      * @var string
      * @access protected
      */
-    protected $key = 'Id';
+    protected $key = 'id';
 
     /**
      * @var array

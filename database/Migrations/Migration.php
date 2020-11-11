@@ -34,7 +34,7 @@ class Migration
         $sql .= ");";
         $db->getQuery($sql);
 
-        $sql = "CREATE TABLE taxes (";
+        $sql = "CREATE TABLE rates (";
         $sql .= "id INT(11) AUTO_INCREMENT PRIMARY KEY,";
         $sql .= "name varchar(60) NOT NULL";
         $sql .= ");";
@@ -65,7 +65,7 @@ class Migration
         $sql = "DROP TABLE IF EXISTS types";
         $db->getQuery($sql);
 
-        $sql = "DROP TABLE IF EXISTS taxes";
+        $sql = "DROP TABLE IF EXISTS rates";
         $db->getQuery($sql);
 
         $sql = "DROP TABLE IF EXISTS sales";

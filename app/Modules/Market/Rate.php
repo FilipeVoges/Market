@@ -7,15 +7,15 @@ namespace App\Modules\Market;
 use App\Entity;
 
 /**
- * Class Product
+ * Class Rate
  * @package App\Modules\Market
  */
-class Product extends Entity
+class Rate extends Entity
 {
     /**
      * @var varchar $table;
      * @access protected
      */
-    protected $table = 'products';
+    protected $table = 'rates';
 
 }
