@@ -1,0 +1,36 @@
+{% extends "app.twig" %}
+
+{% block title %}Vendas{% endblock %}
+
+{% block content %}
+    <div class="row col-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Venda</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sale in sales %}
+                    <tr>
+                        <td scope="row">
+                            <a href="s{{ sale.get('id') }}">
+                                <button type="button" class="btn btn-sm btn-outline-info">Venda #{{ sale.get('id') }}</button>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <hr>
+        <div class="row col-12">
+            <form method="post">
+                <button type="submit" class="btn btn-sm btn-outline-success">Cadastrar</button>
+                <a href="/">
+                    <button type="button" class="btn btn-sm btn-outline-dark">Voltar</button>
+                </a>
+            </form>
+        </div>
+    </div>
+    <hr>
+{% endblock %}

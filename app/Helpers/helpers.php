@@ -228,5 +228,14 @@ function escape_quotes_substring($str) : string
     return $concat;
 }
 
+/**
+ * @param string $url
+ * @param int $exitcode
+ */
+function redirect(string $url, $exitcode = 0) {
+    session_write_close();
+    header("Location: " . APP_URL . "$url");
+    exit($exitcode);
+}
 
 

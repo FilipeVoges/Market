@@ -79,7 +79,7 @@ abstract class Entity extends \stdClass{
 
         try {
             return $class->get('table');
-        }catch (Exception $e) {
+        }catch (\Exception $e) {
             return '';
         }
     }
@@ -99,11 +99,9 @@ abstract class Entity extends \stdClass{
 
         $fields = implode(', ', $fields);
         $sql = buildQuery(self::table(), $fields, $filter);
-
         $stmt = $db->getQuery($sql);
 
         $dados = $db->getFetchAll($stmt);
-
         $className = get_called_class();
         foreach ($dados as $dado) {
             $result[] = new $className($dado);
@@ -113,14 +111,13 @@ abstract class Entity extends \stdClass{
     }
 
     /**
-     * Find Object
-     *
-     * @param mixed $search
-     * string $key
-     * @return Entity
-     * @throws Exception
+     * @param $search
+     * @param string $key
+     * @param bool $required
+     * @return bool|mixed
+     * @throws \Exception
      */
-    public static function find($search, string $key = 'id') {
+    public static function find($search, string $key = 'id', bool $required = false) {
         $db = Database::getInstance();
 
         $className = get_called_class();
@@ -136,18 +133,27 @@ abstract class Entity extends \stdClass{
             $class->populate($data);
         }
 
+        if($required && empty($data)) {
+            return false;
+        }
+
         return $class;
     }
 
     /**
-     * Construct Class
+     * Entity constructor.
+     * @param array $data
      */
-    public function __construct(){
+    public function __construct(array $data = []){
         Entity::$aI = intval(Entity::$aI) + 1;
         $this->set('idClass', Entity::$aI);
 
         if($this->get('hasConn')) {
             $this->db = Database::getInstance();
+        }
+
+        if(!empty($data)){
+            $this->populate($data);
         }
     }
 
@@ -162,7 +168,7 @@ abstract class Entity extends \stdClass{
         if(property_exists($this, $property)){
             return $this->$property;
         }else{
-            throw new Exception("Atributo inexistente." . "-> {$property}", 500);
+            throw new \Exception("Atributo inexistente." . "-> {$property}", 500);
         }
     }
 
@@ -251,30 +257,32 @@ abstract class Entity extends \stdClass{
             return true;
         }
 
-        $sql = buildQuery($this->get('table'), 'count(*) as exists', $this->filter());
+        $sql = buildQuery($this->get('table'), 'count(*) as `reg`', $this->filter());
         $stmt = $this->db->getQuery($sql);
 
         $result = $this->db->getFetchAssoc($stmt);
 
-        return isset($result['exists']) && $result['exists'] > 0;
+        return isset($result['reg']) && $result['reg'] > 0;
     }
 
     /**
      * Create or update a database record.
      *
+     * @param bool $force
      * @return bool
      */
-    public function save() : bool {
+    public function save(bool $force = false) : bool {
         try {
             $key = $this->get('key');
-            if($this->exists()){
+            if($this->exists() && !$force){
                 _update($this->get('table'), $this->getAttributes(false, true), buildWhereQuery($this->filter()));
             }else{
-                $id = _insert($this->get('table'), $this->getAttributes(true), false, true);
+                $id = _insert($this->get('table'), $this->getAttributes(true), true);
                 $this->set($key, $id);
             }
             return true;
         } catch (\Exception $e) {
+            echo $e->getMessage();
             return false;
         }
     }

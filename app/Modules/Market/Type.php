@@ -18,4 +18,35 @@ class Type extends Entity
      */
     protected $table = 'types';
 
+    /**
+     * @var int
+     */
+    protected $id;
+
+    /**
+     * @var string
+     */
+    protected $name = '';
+
+    /**
+     * @return array
+     * @throws \Exception
+     */
+    public function rates() {
+        $key = $this->get($this->get('key'));
+        $typeRate = TypeRate::getAll(['*'], ['type' => $key]);
+
+        $result = [];
+        foreach ($typeRate as $tr) {
+            $rate = Rate::find($tr->get('rate'), 'id', true);
+
+            if(!$rate){
+                throw new \Exception('Taxa não encontrada', 500);
+            }
+
+            $result[] = $rate;
+        }
+        return $result;
+    }
+
 }

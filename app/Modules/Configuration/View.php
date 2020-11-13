@@ -6,6 +6,7 @@ namespace App\Modules\Configuration;
 
 use App\Entity;
 use Twig\Environment;
+use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
 
 class View extends Entity
@@ -47,7 +48,10 @@ class View extends Entity
         $loader = new FilesystemLoader(APP_VIEWS_PATH);
         $twig = new Environment($loader, [
             'cache' => APP_CACHE_PATH . '\framework\views',
+            'debug' => true,
         ]);
+        $twig->addExtension(new DebugExtension());
+        $twig->addFilter('url', new Twig_Filter_Function('url'));
 
         $this->set('twig', $twig);
     }

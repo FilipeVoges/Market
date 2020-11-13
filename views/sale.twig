@@ -1,0 +1,42 @@
+{% extends "app.twig" %}
+
+{% block title %}Venda{% endblock %}
+
+{% block content %}
+    <div class="row col-12">
+        <table class="table" border="1">
+            <thead>
+            <tr>
+                <th scope="col">Produto</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Quantidade</th>
+                <th scope="col">Preço Unitário (Líquido)</th>
+                <th scope="col">Preço Total (Líquido)</th>
+                <th scope="col">Preço Total (Bruto)</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in products %}
+                <tr>
+                    <td scope="row">{{ product.get('name') }}</td>
+                    <td scope="row">{{ product.type().get('name') }}</td>
+                    <td scope="row">{{ product.amount(sale) }}</td>
+                    <td scope="row">{{ product.get('price') }}</td>
+                    <td scope="row">{{ product.total(sale) }}</td>
+                    <td scope="row">{{ product.totalWithRate(sale) }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <hr>
+        <div class="row col-12">
+            <form method="post">
+                <button type="submit" class="btn btn-sm btn-outline-success">Cadastrar</button>
+                <a href="/">
+                    <button type="button" class="btn btn-sm btn-outline-dark">Voltar</button>
+                </a>
+            </form>
+        </div>
+    </div>
+    <hr>
+{% endblock %}

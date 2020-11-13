@@ -1,0 +1,36 @@
+{% extends "app.twig" %}
+
+{% block title %}Venda{% endblock %}
+
+{% block content %}
+    <hr>
+    <div class="row col-12">
+        <form method="post" action="/add" class="col-12">
+            <input type="hidden" name="sale" value="{{ sale }}">
+            <div class="row col-12">
+                <div class="form-group">
+                    <label for="name">Produto</label>
+                    <select class="form-control" id="product" name="product" required>
+                        <option value="">Nada selecionado</option>
+                        {% for product in products %}
+                            <option value="{{ product.get('id') }}">{{ product.get('name') }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="row col-12">
+                <div class="form-group">
+                    <label for="name">Quantidade</label>
+                    <input type="text" class="form-control" id="amount" name="amount" placeholder="Qunatidade" required>
+                </div>
+            </div>
+            <div class="row col-12">
+                <button type="submit" class="btn btn-sm btn-outline-success">Cadastrar</button>
+                <a href="/">
+                    <button type="button" class="btn btn-sm btn-outline-dark">Voltar</button>
+                </a>
+            </div>
+        </form>
+    </div>
+    <hr>
+{% endblock %}

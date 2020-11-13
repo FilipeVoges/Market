@@ -59,6 +59,7 @@ class Database
         $this->password = DB_PASSWORD;
         $this->driver = DB_DRIVER;
         $this->charset = DB_CHARSET;
+        $this->port = DB_PORT;
 
         $this->connect();
     }
@@ -158,12 +159,13 @@ class Database
 
     /**
      *
+     * @throws \Exception
      */
     private function connect() {
         try{
-            $this->db = new \PDO("$this->driver:host=$this->server;dbname=$this->database;charset=$this->charset;", $this->user, $this->password);
-        }  catch (PDOException $e){
-            throw new Exception($e->getMessage());
+            $this->db = new \PDO("$this->driver:host=$this->server;port=$this->port;dbname=$this->database;charset=$this->charset;", $this->user, $this->password);
+        }  catch (\PDOException $e){
+            throw new \Exception($e->getMessage());
         }
     }
 
@@ -184,7 +186,7 @@ class Database
 
         $query = $this->db->query($sql);
         if(!$query){
-            throw new Exception("Erro de SQL." . "-> {$sql} -> " . $this->getErrorMessage(), 500);
+            throw new \Exception("Erro de SQL." . "-> {$sql} -> " . $this->getErrorMessage(), 500);
         }
 
         return $query;
@@ -209,7 +211,7 @@ class Database
      */
     public function getFetchRow($query)
     {
-        return $query->fetch(PDO::FETCH_BOTH);
+        return $query->fetch(\PDO::FETCH_BOTH);
     }
 
     /**
@@ -218,7 +220,7 @@ class Database
      */
     public function getFetchArray($query)
     {
-        return $query->fetch(PDO::FETCH_BOTH);
+        return $query->fetch(\PDO::FETCH_BOTH);
     }
 
     /**
@@ -227,7 +229,7 @@ class Database
      */
     public function getFetchAssoc($query)
     {
-        return  $query->fetch(PDO::FETCH_ASSOC);
+        return  $query->fetch(\PDO::FETCH_ASSOC);
     }
 
     /**
@@ -236,7 +238,7 @@ class Database
      */
     public function getFetchObject($query)
     {
-        return $query->fetch(PDO::FETCH_OBJ);
+        return $query->fetch(\PDO::FETCH_OBJ);
     }
 
     /**

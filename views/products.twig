@@ -1,0 +1,41 @@
+{% extends "app.twig" %}
+
+{% block title %}Produtos{% endblock %}
+
+{% block content %}
+    <hr>
+    <div class="row col-12">
+        <form method="post" class="col-12">
+            <div class="row col-12">
+                <div class="form-group">
+                    <label for="name">Nome Produto</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Nome do produto" required>
+                </div>
+            </div>
+            <div class="row col-12">
+                <div class="form-group">
+                    <label for="name">Preço</label>
+                    <input type="text" class="form-control" id="price" name="price" placeholder="Preço do produto" required>
+                </div>
+            </div>
+            <div class="row col-12">
+                <div class="form-group">
+                    <label for="type">Tipo</label>
+                    <select class="form-control" id="type" name="type" required>
+                        <option value="">Nada selecionado</option>
+                        {% for type in types %}
+                            <option value="{{ type.get('id') }}">{{ type.get('name') }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="row col-12">
+                <button type="submit" class="btn btn-sm btn-outline-success">Cadastrar</button>
+                <a href="/">
+                    <button type="button" class="btn btn-sm btn-outline-dark">Voltar</button>
+                </a>
+            </div>
+        </form>
+    </div>
+    <hr>
+{% endblock %}

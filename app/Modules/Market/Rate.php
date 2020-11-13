@@ -18,4 +18,28 @@ class Rate extends Entity
      */
     protected $table = 'rates';
 
+    /**
+     * @var int
+     */
+    protected $id;
+
+    /**
+     * @var string
+     */
+    protected $name;
+
+    /**
+     * @var int
+     */
+    protected $rate;
+
+    /**
+     * @param float $price
+     * @return float
+     */
+    public function calculate(float $price) : float {
+        $rate = $this->get('rate')/100;
+        return floatval($rate * $price);
+    }
+
 }
