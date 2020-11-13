@@ -51,7 +51,6 @@ class View extends Entity
             'debug' => true,
         ]);
         $twig->addExtension(new DebugExtension());
-        $twig->addFilter('url', new Twig_Filter_Function('url'));
 
         $this->set('twig', $twig);
     }
