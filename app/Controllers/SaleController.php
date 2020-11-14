@@ -84,6 +84,10 @@ class SaleController extends Controller
     }
 
     public function registerProduct() {
+        if(empty($this->request)){
+            redirect('sales');
+            return;
+        }
         $product = (isset($this->request['product'])) ? $this->request['product'] : null;
         if(is_null($product)) {
             return $this->home(['error' => ['É necessário informar qual produto está sendo vendido.']]);
